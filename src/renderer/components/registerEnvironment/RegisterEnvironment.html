@@ -1,0 +1,84 @@
+<section>
+
+    <h4 class="title">Add Environment</h4>
+    <div class="field has-addons">
+        <div class="columns w-100 ">
+            <div class="column is-four-fifths">
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Environment</label>
+                            <div class="control">
+                                <input class="input" v-model="register.environment.name" required type="text" placeholder="Environment">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">User</label>
+                            <div class="control">
+                                <input class="input" v-model="register.environment.user" required type="text" placeholder="User">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input class="input" v-model="register.environment.password" required type="password" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <label class="checkbox">
+                            <input type="checkbox"  v-model="register.environment.isProduction"/>
+                            Is Production
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="column ">
+                <a class="button w-100 is-info is-outlined m-t-24" :disabled="!register.environment.isValid" v-on:click="addEnvironment()">
+                    Add Environment
+                </a>
+            </div>
+        </div>
+    </div>
+    <article class="message is-danger is-small" v-if="register.environment.message">
+        <div class="message-body">
+            {{register.environment.message}}
+        </div>
+    </article>
+    <hr>
+    <h4 class="title">Environment List</h4>
+    <div class="box b-0 p-0" v-for="item in environments">
+        <div class="relative title-content list-title" v-on:click="toogleExpand(item.id)" v-bind:class="{ isProduction: item.isProduction, expanded: register.environment.expanded[item.id]}">
+            <p class="reset">{{ item.name }}</p>
+            <span class="delete remove" aria-label="delete" v-on:click="removeEnvironment(item.id)"></span>
+        </div>
+        <div class="list-list">
+            <ul class="reset">
+                <li class="host-item" v-for="host in item.hosts">
+                    {{host.ip}}
+                    <span class="delete remove" aria-label="delete" v-on:click="removeHost(item.id, host.id)"></span>
+                </li>
+                <li class="host-item">
+                    <div class="columns">
+                        <div class="column ">
+                            <div class="field has-addons">
+                                <div class="control w-100 ">
+                                    <input class="input" type="text" v-model="register.environment.hostArr[item.id]" placeholder="Add list separated by ','">
+                                </div>
+                                <div class="control">
+                                    <a class="button is-info is-outlined" v-on:click="addHostArr(item.id)">
+                                        Add Host
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
