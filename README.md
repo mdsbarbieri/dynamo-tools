@@ -1,6 +1,5 @@
-# dynareq-ui
-
-> Execute requests to all production servers
+# dynamo-tools
+> Pack of external tools to ATG Dynamo
 
 #### Download
 
